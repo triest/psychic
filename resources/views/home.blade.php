@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app',['title'=>'Загадате число!'])
 
 @section('content')
 <div class="container">
