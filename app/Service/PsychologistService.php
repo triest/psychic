@@ -20,35 +20,31 @@ class PsychologistService
      */
     public function getGuesses()
     {
-        if (Session::has('gusses')) {
+        if(Session::has('gusses')){
             $gusses = Session::get('gusses');
-        } else {
-            $psychologists = Psychic::select(['*'])->limit(rand(2, $this->maxPsychologist))->get();
-            foreach ($psychologists as $psychologist) {
-                $temp_gusses=$psychologist->gusses();
-                $gusses[] = [
-                        'id' => $psychologist->id,
-                        'psychologist' => $psychologist->name,
-                        'gusses' => $temp_gusses,
-                        'level' => $psychologist->level
-                ];
-
-                /*
-                 * сохраняем история догадог
-                 * */
-                if(Session::has('gusses_history')){
-                    $gusses_history=Session::get('gusses_history');
-                }else{
-                    $gusses_history=[];
-                }
-
-                $gusses_history[$psychologist->id]['name']=$psychologist->name;
-                $gusses_history[$psychologist->id]['gusses']=$temp_gusses;
-                Session::put('gusses_history',$gusses_history);
-
-            }
-            Session::put('gusses', $gusses);
         }
+
+
+        if(!isset($gusses) || empty($gusses))
+        {
+             $psychologists = Psychic::select(['*'])->limit(rand(2, $this->maxPsychologist))->get();
+
+             $gusses=[];
+
+            foreach ($psychologists as $psychologist){
+                $gusses[]['psychologist']=$psychologist;
+            }
+        }
+
+
+        foreach ($gusses as $key=>$guss){
+            $gusses[$key]['gus']=$guss['psychologist']->getGusses();
+        }
+
+
+
+        Session::put('gusses', $gusses);
+
 
 
         return $gusses;
@@ -63,28 +59,37 @@ class PsychologistService
         }
         $gusses = Session::get('gusses');
 
+        if(Session::has('input_history')){
+            $input_history=Session::get('input_history');
+        }else{
+            $input_history=[];
+        }
+
+        $input_history[]=$number;
+        Session::put('input_history',$input_history);
+
+        if(Session::has('guesses_history')){
+            $guesses_history=Session::get('guesses_history');
+        }else{
+            $guesses_history=[];
+        }
+
+
         foreach ($gusses as $key => $item) {
-            if ($item['gusses'] === $number) {
-                $gusses[$key]['level'] = $item['level'] + 1;
+            if ($item['gus'] === $number) {
+                $gusses[$key]['psychologist']->level = $item['psychologist']->level + 1;
+                $gusses[$key]['psychologist']->level = $item['psychologist']->level + 1;
+                $guesses_history[$item['psychologist']->id]['name']=$item['psychologist']->name;
+                $guesses_history[$item['psychologist']->id]['history'][]=$number;
             } else {
-                $gusses[$key]['level'] = $item['level'] - 1;
+                $gusses[$key]['psychologist']->level = $item['psychologist']->level - 1;
             }
         }
 
-        //историй введенных пользователем чисед
-        if (!Session::has('input_history')) {
-            $input_history=[];
-        }else{
-            $input_history= Session::get('input_history');
-            $input_history[]=$number;
-        }
+        Session::put('gusses',$gusses);
 
+        dump($guesses_history);
+        Session::put('guesses_history',$guesses_history);
 
-        Session::put('input_history',$input_history); //история введенных чисел
-        Session::put('results', $gusses); //результаты
-        Session::put('gusses', $gusses); //догадки.
-
-
-        return $gusses;
     }
 }

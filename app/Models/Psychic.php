@@ -9,7 +9,9 @@ class Psychic extends Model
 {
     use HasFactory;
 
-    public function gusses(){
+
+
+    public function getGusses(){
          return rand(0,99);
     }
 }

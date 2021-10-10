@@ -40,15 +40,14 @@ class PsychologistController extends Controller
             $input_history=null;
         }
 
-        if(Session::has('gusses_history')){
-            $gusses_history=Session::get('gusses_history');
+        if(Session::has('guesses_history')){
+            $guesses_history=Session::get('guesses_history');
         }else{
-            $gusses_history=[];
+            $guesses_history=[];
         }
 
 
-
-            return view('gusses')->with(compact('guesses','results','input_history','gusses_history'));
+        return view('gusses')->with(compact('guesses','input_history','guesses_history'));
     }
 
     public function makeInput(RequestInputNumber $requestInputNumber){

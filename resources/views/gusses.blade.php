@@ -18,7 +18,7 @@
                     @foreach($guesses as $guesse)
                         <tr>
                             <td>{{ $loop->iteration  }}</td>
-                            <td>{{$guesse['gusses']}}</td>
+                            <td>{{$guesse['gus']}}</td>
                         </tr>
                     @endforeach
                 </table>
@@ -30,30 +30,44 @@
 
                     @foreach($input_history as $item)
                         <tr>
-                           <td>{{ $loop->iteration  }}</td>
-                           <td>{{$item}}</td>
+                            <td>{{ $loop->iteration  }}</td>
+                            <td>{{$item}}</td>
                         </tr>
                     @endforeach
                 </table>
             @endisset
 
-            @isset($results)
-                 Рейтинг экстрасенсов
+            @isset($guesses)
+                Рейтинг экстрасенсов
                 <table class="table">
 
                     <tbody>
                     @foreach($guesses as $result)
                         <tr>
                             <td>{{ $loop->iteration  }}</td>
-                            <td>{{$result['psychologist']}}</td>
-                            <td>{{$result['level']}}</td>
+                            <td>{{$result['psychologist']->name}}</td>
+                            <td>{{$result['psychologist']->level}}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-            @endisset
-        </div>
 
+            @endisset
+            <table class="table">
+                <tbody>
+                @isset($guesses_history)
+                    История догадок экстрасенса
+                    @foreach($guesses_history as $item)
+                        <tr>
+                            <td>{{ $loop->iteration  }}</td>
+                            <td>{{ $item['name']  }}</td>
+                            <td>{{ implode(',',$item['history'] ) }}</td>
+                        </tr>
+                    @endforeach
+                @endisset
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection
 
