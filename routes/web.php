@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PsychologistController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Auth::routes();
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('/psychics/guess-number',[PsychologistController::class,'guessNumber'])->name('guess-number');
+Route::post('/psychics/make-number',[PsychologistController::class,'makeInput'])->name('make-input');
