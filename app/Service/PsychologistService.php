@@ -88,7 +88,6 @@ class PsychologistService
 
         Session::put('gusses',$gusses);
 
-        dump($guesses_history);
         Session::put('guesses_history',$guesses_history);
 
     }
