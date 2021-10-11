@@ -52,7 +52,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://laravel-test.ru.xsph.ru'),
+
+    'base_url' => env('BASE_URL', 'http://laravel-test.ru.xsph.ru'),
 
     'asset_url' => env('ASSET_URL', null),
 

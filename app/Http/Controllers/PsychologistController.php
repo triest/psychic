@@ -48,6 +48,6 @@ class PsychologistController extends Controller
     public function makeInput(RequestInputNumber $requestInputNumber){
          $this->psychoticService->setNumber($requestInputNumber->number);
 
-         return redirect('/');
+        return redirect(config('app.base_url'));
     }
 }
