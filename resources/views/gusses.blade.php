@@ -6,9 +6,17 @@
             <form method="post" action="{{route('make-input')}}">
                 @csrf
                 <label for="number">Введите загаданное число</label>
-                <input type="number" name="number" id="number" required>
+                <input type="text" name="number" id="number">
                 <input type="submit" value="Загадал!">
-
+                @if (isset($errors) && $errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </form>
 
             @isset($guesses)
