@@ -78,7 +78,6 @@ class PsychologistService
         foreach ($gusses as $key => $item) {
             if ($item['gus'] === $number) {
                 $gusses[$key]['psychologist']->level = $item['psychologist']->level + 1;
-                $gusses[$key]['psychologist']->level = $item['psychologist']->level + 1;
                 $guesses_history[$item['psychologist']->id]['name']=$item['psychologist']->name;
                 $guesses_history[$item['psychologist']->id]['history'][]=$number;
             } else {
