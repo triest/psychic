@@ -28,11 +28,6 @@ class PsychologistController extends Controller
 
          $guesses=$this->psychoticService->getGuesses();
 
-        if(Session::has('results')){
-            $results=Session::get('results');
-        }else{
-            $results=null;
-        }
 
         if(Session::has('input_history')){
             $input_history=Session::get('input_history');
@@ -53,6 +48,6 @@ class PsychologistController extends Controller
     public function makeInput(RequestInputNumber $requestInputNumber){
          $this->psychoticService->setNumber($requestInputNumber->number);
 
-         return redirect(route('home'));
+         return redirect('/');
     }
 }
