@@ -40,6 +40,7 @@ class PsychologistTest extends TestCase
                 ['number'=>32],
                 [   '_token' => csrf_token()]
         );
+
         $response->assertStatus(302);
     }
 
